@@ -1,17 +1,24 @@
 import discord
-from discord.ext import commands, tasks
 import os
 import asyncio
+import json
+
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from itertools import cycle
 
+
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+TOKEN=os.getenv('DISCORD_TOKEN') #pulls token from the .env file
+client=commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 
 
-bot_status = cycle(['Uno', 'Blackjack', 'Poker', 'Go Fish'])
+
+
+
+#cycles through status at set intervals
+bot_status=cycle(['Uno', 'Blackjack', 'Poker', 'Go Fish'])
 
 @tasks.loop(seconds=3600)
 async def change_status():
@@ -19,10 +26,14 @@ async def change_status():
 
 
 
+
+
+
+#lets us know if bot was turn on properly
 @client.event
 async def on_ready():
-    print("You have successfully logged into the Bot")
-    print('_________________________________________')
+    print(f"You have successfully logged into {client.user.name}")
+    print('______________________')
     change_status.start()
 
 
@@ -33,7 +44,11 @@ async def load():
 
 
 
-banned_words = ['NIGGER', 'NIGGA', 'FAGGOT', 'FAG', 'TRANNY', 'CHINK', 'RETARD']
+
+
+
+#banned words
+banned_words=[]
 
 @client.event
 async def on_message(message):
@@ -42,6 +57,29 @@ async def on_message(message):
         if word in message.content.lower() or word in message.content.upper():
             await message.delete()
             await message.channel.send(f'{message.author.mention} You cannot say that word!')
+
+
+
+@client.event
+async def on_guild_join(guild):
+    with open('cogs/jsonfiles/mutes.json', 'r') as f:
+        
+        mute_role = json.load(f)
+        mute_role[str(guild.id)] = None
+
+    with open('cogs/jsonfiles/mutes.json', 'w') as f:
+        json.dump(mute_role, f, indent=4)
+
+@client.event
+async def on_guild_remove(guild):
+    with open('cogs/jsonfiles/mutes.json', 'r') as f:
+        
+        mute_role = json.load(f)
+        mute_role.pop(str(guild.id))
+
+    with open('cogs/jsonfiles/mutes.json', 'w') as f:
+        json.dump(mute_role, f, indent=4)
+
 
 
 

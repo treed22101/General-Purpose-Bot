@@ -9,8 +9,14 @@ class Ping(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Ping.py is ready!")
+        print("Ping.py is online.")
+        print('______________________')
 
+
+
+
+
+#latency command
     @commands.command()
     async def ping(self, ctx):
         latency = round(self.client.latency * 1000)
