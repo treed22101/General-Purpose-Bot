@@ -23,4 +23,4 @@ Banned words are not set, you can change in the main file bot.py
 
 
 ### Requirements
-See requirements.tx
+See requirements.txt
