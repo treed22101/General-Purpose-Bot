@@ -1,6 +1,6 @@
 ## General_Purpose_Bot
-A general purpose discord bot that has all the best features!
-Make sure to run the code from bot.py
+A general purpose discord bot made with discord.py.
+Make sure to run the code from the file bot.py!
 
 
 
