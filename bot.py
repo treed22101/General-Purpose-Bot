@@ -55,9 +55,12 @@ async def on_message(message):
         if word in message.content.lower() or word in message.content.upper():
             await message.delete()
             await message.channel.send(f'{message.author.mention} You cannot say that word!')
+    if 'hello' in message.content:
+        await message.channel.send('Hey buddy!')
+    if 'bye' in message.content:
+        await message.channel.send('Cya buddy!')
 
     
-
 
 
 
@@ -87,8 +90,34 @@ async def on_guild_remove(guild):
 
 
 
+#member info command
+@client.command()
+async def stats(ctx, member:discord.Member=None):
+    if member is None:
+        member = ctx.author
+    elif member is not None:
+        member = member
+    
+    info_embed = discord.Embed(
+        title=f"{member.name}'s User Information",
+          description="The member's server info.",
+          color=member.color
+          )
+    
+    info_embed.set_thumbnail(url=member.avatar)
+    info_embed.add_field(name='Name:', value=member.name, inline=True)
+    info_embed.add_field(name='Nickname:', value=member.display_name, inline=True)
+    info_embed.add_field(name='ID:', value=member.id, inline=True)
+    info_embed.add_field(name='Top Role:', value=member.top_role, inline=True)
+    info_embed.add_field(name='Joined at:', value=member.joined_at.__format__('%B / %d / %Y. @ %H:%M:%S'), inline=True)
+    
+    await ctx.send(embed=info_embed)
 
-#error handling
+
+
+
+
+#global error handling
 @client.event 
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):

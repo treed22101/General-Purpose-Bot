@@ -145,7 +145,24 @@ class Moderation(commands.Cog):
         await member.remove_roles(mute_role)
         await ctx.send(f'{member.mention} has been unmuted.')
 
-    
+
+
+
+
+#latency command
+    @commands.command()
+    async def ping(self, ctx):
+        latency = round(self.client.latency * 1000)
+
+        embed = discord.Embed(
+            title='Ping!',
+            description=f'My current ping is {latency:.2f} ms',
+            color=discord.Color.yellow()
+        )
+
+        embed.set_thumbnail(url=ctx.author.avatar.url)
+        await ctx.reply(embed=embed)
+
 
 
 async def setup(client):
