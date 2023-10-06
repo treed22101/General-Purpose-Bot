@@ -15,8 +15,6 @@ client=commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 
 
-
-
 #cycles through status at set intervals
 bot_status=cycle(['Uno', 'Blackjack', 'Poker', 'Go Fish'])
 
@@ -58,8 +56,13 @@ async def on_message(message):
             await message.delete()
             await message.channel.send(f'{message.author.mention} You cannot say that word!')
 
+    
 
 
+
+
+
+#mute role server based
 @client.event
 async def on_guild_join(guild):
     with open('cogs/jsonfiles/mutes.json', 'r') as f:
@@ -68,7 +71,7 @@ async def on_guild_join(guild):
         mute_role[str(guild.id)] = None
 
     with open('cogs/jsonfiles/mutes.json', 'w') as f:
-        json.dump(mute_role, f, indent=4)
+        json.dump(mute_role, f, indent=5)
 
 @client.event
 async def on_guild_remove(guild):
@@ -78,10 +81,20 @@ async def on_guild_remove(guild):
         mute_role.pop(str(guild.id))
 
     with open('cogs/jsonfiles/mutes.json', 'w') as f:
-        json.dump(mute_role, f, indent=4)
+        json.dump(mute_role, f, indent=5)
 
 
 
+
+
+
+#error handling
+@client.event 
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Error: Missing Required Argument(s). Are you sure you provided all the required arguments?')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send('You do not have the permissions to use this command.')
 
 
 async def main():

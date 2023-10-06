@@ -34,16 +34,15 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, member: discord.Member, reason=None):
         await ctx.guild.kick(member)
 
-        embed=discord.Embed(title=f'Confirmed.', color=discord.Color.green())
+        embed=discord.Embed(
+            title=f'Confirmed.',
+            color=discord.Color.green()
+        )
+        
         embed.add_field(name='Kicked:', value=f'{member.mention} has been kicked by {ctx.author.mention}.', inline=False)
         embed.add_field(name='Reason:', value=reason, inline=False)
 
         await ctx.send(embed=embed)
-
-    @kick.error
-    async def kick_error(ctx,error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send('You do not have the permissions to use this!')
 
 
 
@@ -56,19 +55,17 @@ class Moderation(commands.Cog):
     async def ban(self, ctx, member: discord.Member, reason=None):
         await ctx.guild.ban(member)
 
-        embed=discord.Embed(title=f'Confirmed.', color=discord.Color.dark_gold())
+        embed=discord.Embed(
+            title=f'Confirmed.', 
+            color=discord.Color.dark_gold()
+        )
+
         embed.add_field(name='Banned:', value=f'{member.mention} has been banned by {ctx.author.mention}.', inline=False)
         embed.add_field(name='Reason:', value=reason, inline=False)
 
         await ctx.send(embed=embed)
 
-    @ban.error
-    async def ban_error(ctx,error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send('You do not have the permissions to use this!')
-
-
-
+  
 
 
 
@@ -80,18 +77,16 @@ class Moderation(commands.Cog):
         user = discord.Object(id=userId)
         await ctx.guild.unban(user)
         
-        embed = discord.Embed(title='Confirmed.', color=discord.Color.dark_gold())
+        embed = discord.Embed(
+            title='Confirmed.', 
+            color=discord.Color.dark_gold()
+        )
+
         embed.add_field(name='Unbanned:', value=f'{userId} has been unbanned by {ctx.author.mention}.', inline=False)
 
         await ctx.send(embed=embed)
 
-    @unban.error
-    async def unban_error(ctx,error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send('You do not have the permissions to use this!')
-
-
-
+    
 
 
 
@@ -108,14 +103,17 @@ class Moderation(commands.Cog):
         with open('cogs/jsonfiles/mutes.json', 'w') as f:
             json.dump(mute_role, f, indent=4)
 
-        embed=discord.Embed(title='Confirmed.', color=discord.Color.orange())
+        embed=discord.Embed(
+            title='Confirmed.', 
+            color=discord.Color.orange()
+        )
+
         embed.add_field(name='Mute role has been set.', value=f'All members who are muted will have this role {role.mention}')
 
         await ctx.send(embed=embed)
 
 
-
-
+ 
 
 
 
@@ -135,7 +133,6 @@ class Moderation(commands.Cog):
 
 
 
-
 #unmute command
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -148,7 +145,7 @@ class Moderation(commands.Cog):
         await member.remove_roles(mute_role)
         await ctx.send(f'{member.mention} has been unmuted.')
 
-
+    
 
 
 async def setup(client):
