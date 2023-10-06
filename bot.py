@@ -45,7 +45,7 @@ async def load():
 
 
 
-#banned words
+#banned words and message detection
 banned_words=[]
 
 @client.event
