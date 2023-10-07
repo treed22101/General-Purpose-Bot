@@ -2,6 +2,7 @@ import discord
 import os
 import asyncio
 import json
+import random 
 
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -18,7 +19,7 @@ client=commands.Bot(command_prefix='!', intents=discord.Intents.all())
 #cycles through status at set intervals
 bot_status=cycle(['Uno', 'Blackjack', 'Poker', 'Go Fish'])
 
-@tasks.loop(seconds=3600)
+@tasks.loop(seconds=500)
 async def change_status():
     await client.change_presence(activity=discord.Game(next(bot_status)))
 
@@ -36,9 +37,9 @@ async def on_ready():
 
 
 async def load():
-    for filename in os.listdir('./cogs'):
+    for filename in os.listdir('./features'):
         if filename.endswith('.py'):
-            await client.load_extension(f'cogs.{filename[:-3]}')
+            await client.load_extension(f'features.{filename[:-3]}')
 
 
 
@@ -85,6 +86,48 @@ async def on_guild_remove(guild):
 
     with open('cogs/jsonfiles/mutes.json', 'w') as f:
         json.dump(mute_role, f, indent=5)
+
+
+
+
+
+response = ['You got lucky this time!', 'Luck was on your side today!', 'You live, try your lucky again?', 'Try again, if you dare.']
+
+def check(message):
+    try:
+        int(message.content)
+        return True
+    except ValueError:
+        return False
+
+#russian roulette command, bans the user if they guess the random number, check above and random responses.
+@client.command()
+async def roulette(ctx, member:discord.Member=None):
+
+    if member is None:
+        member = ctx.author
+    elif member is not None:
+        member = member
+
+    await ctx.send('Choose a number between 1 and 6.')
+
+    chamber = random.randint(1,6)
+    msg = await client.wait_for("message", check=check)
+    choice = int(msg.content)
+
+    if choice == chamber:
+        await asyncio.sleep(1)
+        await ctx.send(f"Guess you can't be so lucky always!")
+        await asyncio.sleep(1)
+        for number in range(5,0,-1):
+            await asyncio.sleep(1)
+            await ctx.send(number)
+        await member.ban(member)
+    
+    else:
+        await asyncio.sleep(1)
+        await ctx.send(random.choice(response))
+
 
 
 

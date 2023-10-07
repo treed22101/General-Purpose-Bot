@@ -15,7 +15,7 @@ class Levels(commands.Cog):
 
         self.client.loop.create_task(self.save())
 
-        with open('cogs/jsonfiles/users.json', 'r') as f:
+        with open('features/jsonfiles/users.json', 'r') as f:
             self.users = json.load(f)
 
 
@@ -37,7 +37,7 @@ class Levels(commands.Cog):
     async def save(self):
         await self.client.wait_until_ready()
         while not self.client.is_closed():
-            with open('cogs/jsonfiles/users.json', 'w') as f:
+            with open('features/jsonfiles/users.json', 'w') as f:
                 json.dump(self.users, f, indent=5)
 
             await asyncio.sleep(5)
