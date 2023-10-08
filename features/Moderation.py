@@ -94,7 +94,7 @@ class Moderation(commands.Cog):
 #setmuterole command
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setmuterole(self,ctx, role:discord.Role):
+    async def setmute(self,ctx, role:discord.Role):
         with open('features/jsonfiles/mutes.json', 'r') as f:
         
             mute_role = json.load(f)

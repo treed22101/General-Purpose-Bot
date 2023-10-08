@@ -38,6 +38,8 @@ class Levels(commands.Cog):
 
 
 
+
+
 #this saves our exp and level to the json file, you can do a database instead if you would like, this was for simplicity
     async def save(self):
         await self.client.wait_until_ready()
@@ -72,6 +74,8 @@ class Levels(commands.Cog):
 
         if self.level_up(author_id):
             await message.channel.send(f'{message.author.mention} has leveled up to level {self.users[author_id]["Level"]}!')
+
+
 
 
 #level command (lets us know our level and exp)

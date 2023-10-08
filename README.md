@@ -12,8 +12,8 @@ Moderation, setup, level system, and more.
 4. All of the commands are listed via !help once you setup the bot
 
 # Setup Note
-1. Some of the commands are not customized, so set them to your liking.
+1. Some of the commands are not customized such as banned words, so set them to your liking.
 
-2. The role in ```Autorole.py```, banned words in ```main.py```, the logging channel name in ```Logging.py```, and the welcome channel id in ```Greeting.py``` all need to be set by you!
+2. The role in ```Autorole.py``` and the welcome channel id in ```Greeting.py``` needs to be set by you, and make sure you have a "logging" channel by that name (you can change the names if you want in ```Logging.py file```).
 
 3. Use !setmuterole {the name of the role} to set the mute role.

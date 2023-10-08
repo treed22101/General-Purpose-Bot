@@ -4,8 +4,7 @@ import asyncio
 import json
 import random 
 
-
-
+from discord import reaction, user
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions
 from dotenv import load_dotenv
@@ -15,7 +14,7 @@ from itertools import cycle
 load_dotenv()
 TOKEN=os.getenv('DISCORD_TOKEN') #pulls token from the .env file
 client=commands.Bot(command_prefix='!', intents=discord.Intents.all())
-
+client.remove_command('help')
 
 
 
@@ -97,7 +96,7 @@ async def on_guild_remove(guild):
 
 
 
-response = ['You got lucky this time!', 'Luck was on your side today!', 'You live, try your lucky again?', 'Try again, if you dare.']
+response = ['You got lucky this time!', 'Luck was on your side today!', 'You live, try your luck again?', 'Try again, if you dare.']
 
 def check(message):
     try:
@@ -153,8 +152,125 @@ async def create(ctx):
     await guild.create_voice_channel(name='music')
     
     
+
+
+
+
+
+
+#multipage help command
+
+#page1
+page1 = discord.Embed(
+    title='Admin Commands', 
+    description='Commands only mods can use!',
+      color=discord.Color.dark_gold()
+)
+page1.add_field(name='clear', value='Deletes a specified amount of messages', inline=False)
+page1.add_field(name='kick', value='Kicks a specified user', inline=False)
+page1.add_field(name='ban', value='Bans a specified user', inline=False)
+page1.add_field(name='unban', value='Unbans a specified user', inline=False)
+page1.add_field(name='mute', value='Adds a mute role to a speicifed user', inline=False)
+page1.add_field(name='unmute', value='Takes away the mute role from a specified user', inline=False)
+page1.add_field(name='setup', value='Automatically sets up very basic discord channels and vcs', inline=False)
+
+
+
+#page 2
+page2 = discord.Embed(
+    title='Info Commands', 
+    description='Commands for info!', 
+    color=discord.Color.dark_red()
+)
+page2.add_field(name='stats', value='Deletes a specified amount of messages', inline=False)
+page2.add_field(name='level', value='Deletes a specified amount of messages', inline=False)
+page2.add_field(name='help', value='Sends what you are looking at right now!', inline=False)
+
+
+
+#page 3
+page3 = discord.Embed(
+    title='Fun Commands',
+    description='Commands for fun!', 
+    color=discord.Color.dark_green()
+)
+page3.add_field(name='roulette', value='Deletes a specified amount of messages', inline=False)
+page3.add_field(name='ping', value='Lets you know the latency of the bot', inline=False)
+page3.add_field(name='punch', value='Punches a specified user', inline=False)
+
+client.help_pages = [page1, page2, page3]
+
+
+
+
+#(the actual help command)
+@client.command()
+async def help(ctx):
+    buttons = {u'\u23EA', u'\u25C0', u'\u25B6', u'\u23E9'}
+    current = 0
+    msg = await ctx.send(embed=client.help_pages[current])
+
+    for button in buttons:
+        await msg.add_reaction(button)
     
-    
+    while True:
+        try:
+            reaction, user = await client.wait_for('reaction_add', check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons, timeout=60)
+
+        except asyncio.TimeoutError:
+            embed = client.help_pages[current]
+            embed.set_footer(text='Timed Out.')
+            await msg.clear_reactions()
+
+        else:
+            previous_page = current
+
+            if reaction.emoji == u'\u23EA':
+                current = 0
+
+            elif reaction.emoji == u'\u25C0':
+                if current > 0:
+                    current -= 1
+
+
+            elif reaction.emoji == u'\u25B6':
+                if current < len(client.help_pages)-1:
+                    current +=1
+            
+            elif reaction.emoji == u'\u23E9':
+                current = len(client.help_pages)-1
+
+            for button in buttons:
+                await msg.remove_reaction(button, ctx.author)
+
+            if current != previous_page:
+                await msg.edit(embed=client.help_pages[current])
+
+
+
+
+
+#dumb punch command
+@client.command()
+async def punch(ctx, member:discord.Member):
+    punches = [f'{ctx.author.mention} just punched {member.mention}!', 
+            f'{ctx.author.mention} just punched {member.mention} with astronomical force!', 
+            f'{ctx.author.mention} just punched {member.mention} with the force of a thousand bears!',
+            f"{ctx.author.mention} just punched {member.mention} down some stairs and now he can't get back up?", 
+            f'{ctx.author.mention} just punched {member.mention} off a cliff!',
+            f'{ctx.author.mention} just punched {member.mention} out of this planet!',
+            f'{ctx.author.mention} just punched {member.mention} into a volcano!',
+            f'{ctx.author.mention} just punched {member.mention} into a wall?'
+            f"{ctx.author.mention} just punched {member.mention}'s head into the ground!"
+            f'{ctx.author.mention} just punched {member.mention} to death!'
+               ]
+    await ctx.send(random.choice(punches))
+
+
+
+
+
+
 
 
 
@@ -189,7 +305,7 @@ async def stats(ctx, member:discord.Member=None):
 @client.event 
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Error: Missing Required Argument(s). Are you sure you provided all the required arguments?')
+        await ctx.send('Missing argument, did you specify who or how many?')
     if isinstance(error, commands.MissingPermissions):
         await ctx.send('You do not have the permissions to use this command.')
 

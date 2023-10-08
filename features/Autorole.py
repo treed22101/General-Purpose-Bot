@@ -2,13 +2,13 @@ import discord
 from discord.ext import commands
 
 
-class Autorole(commands.Cog):
+class AutoRole(commands.Cog):
     def __init__(self,client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Autorole.py is online.")
+        print("AutoRole.py is online.")
         
 
 
@@ -22,4 +22,4 @@ class Autorole(commands.Cog):
 
 
 async def setup(client):
-    await client.add_cog(Autorole(client))
+    await client.add_cog(AutoRole(client))
