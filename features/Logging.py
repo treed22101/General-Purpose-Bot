@@ -25,7 +25,7 @@ class Logging(commands.Cog):
             return
         
                                                         #SET LOGGING CHANNEL NAME HERE 
-        log_channel = discord.utils.get(message.guild.channels, name='logging')
+        log_channel = discord.utils.get(message.guild.channels, name='')
 
         log_embed = discord.Embed(
             title='Message Logged', 
