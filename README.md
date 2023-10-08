@@ -14,6 +14,6 @@ Moderation, setup, level system, and more.
 # Setup Note
 1. Some of the commands are not customized, so set them to your liking.
 
-2. The role in ```Autorole.py```, banned words in ```main.py```, the logging channel name in ```Logging.py```, and the welcome channel id in ```Greeting.py``` all need to be set by you!
+2. The role in ```Autorole.py```, banned words in ```main.py```, the logging channel name in ```Logging.py```, and the welcome channel id in ```Greeting.py``` all need to be set with roles and channels YOU create in your server, as well as words you don't want being said.
 
-3. Use !setmuterole {the name of the role} to set the mute role.
+3. Use !setmuterole {the name of the role} to set the mute role (create one).
