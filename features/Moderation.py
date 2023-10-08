@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 
+
 class Moderation(commands.Cog):
     def __init__(self,client):
         self.client = client
@@ -9,7 +10,7 @@ class Moderation(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Moderation.py is online.")
-        print('______________________')
+        
 
 
 
@@ -22,7 +23,6 @@ class Moderation(commands.Cog):
     async def clear(self,ctx,count: int):
         await ctx.channel.purge(limit=count)
         await ctx.send(f'{count} message(s) have been deleted.')
-
 
 
 
@@ -162,6 +162,7 @@ class Moderation(commands.Cog):
 
         embed.set_thumbnail(url=ctx.author.avatar.url)
         await ctx.reply(embed=embed)
+
 
 
 

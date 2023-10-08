@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands 
 
 class Greeting(commands.Cog):
     def __init__(self,client):
@@ -8,12 +8,12 @@ class Greeting(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Greeting.py is online.")
-        print('______________________')
+        
 
 
 
 
-#when a user joins the server
+#when a user joins the server/ SET THE WELCOME CHANNEL ID
     @commands.Cog.listener()
     async def on_member_join(self, member):
         guild = member.guild
@@ -35,7 +35,7 @@ class Greeting(commands.Cog):
 
 
 
-#when a user leaves the server
+#when a user leaves the server/ SET THE WELCOME CHANNEL ID
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         guild = member.guild
@@ -52,7 +52,6 @@ class Greeting(commands.Cog):
             embed.add_field(name='Gone but maybe not for good?', value='(Probably gone for good)')
             
             await channel.send(embed=embed) 
-
 
 
 

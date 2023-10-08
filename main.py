@@ -5,6 +5,8 @@ import json
 import random 
 
 from discord.ext import commands, tasks
+from discord.ext.commands import has_permissions, MissingPermissions
+from discord.utils import get
 from dotenv import load_dotenv
 from itertools import cycle
 
@@ -32,7 +34,7 @@ async def change_status():
 @client.event
 async def on_ready():
     print(f"You have successfully logged into {client.user.name}")
-    print('______________________')
+    print('----------------------')
     change_status.start()
 
 
@@ -91,6 +93,8 @@ async def on_guild_remove(guild):
 
 
 
+
+
 response = ['You got lucky this time!', 'Luck was on your side today!', 'You live, try your lucky again?', 'Try again, if you dare.']
 
 def check(message):
@@ -130,6 +134,25 @@ async def roulette(ctx, member:discord.Member=None):
 
 
 
+
+
+
+
+#server setup command, you can change this to how you like, with the same format!
+@client.command()
+@has_permissions(manage_messages=True)
+async def create(ctx):
+    guild = ctx.guild
+    await ctx.send('Setup in progress!')
+    await guild.create_text_channel(name='welcome')
+    await guild.create_text_channel(name='gen')
+    await guild.create_text_channel(name='music')
+    await guild.create_voice_channel(name='gen')
+    await guild.create_voice_channel(name='music')
+    
+    
+    
+    
 
 
 

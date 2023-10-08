@@ -6,19 +6,25 @@ class Logging(commands.Cog):
     def __init__(self,client):
         self.client = client
 
+
+
+
     @commands.Cog.listener()
     async def on_ready(self):
         print("Logging.py is online.")
-        print('______________________')
+        
 
 
+
+
+#logging feature/ SET THE NAME OF THE LOGGING CHANNEL 
     @commands.Cog.listener()
     async def on_message(self, message):
         
         if (message.author.bot):
             return
         
-
+                                                        #SET LOGGING CHANNEL NAME HERE 
         log_channel = discord.utils.get(message.guild.channels, name='logging')
 
         log_embed = discord.Embed(
@@ -33,6 +39,9 @@ class Logging(commands.Cog):
         
 
         await log_channel.send(embed=log_embed)
+
+
+
 
 
 

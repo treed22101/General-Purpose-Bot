@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 
+
 class Autorole(commands.Cog):
     def __init__(self,client):
         self.client = client
@@ -8,15 +9,14 @@ class Autorole(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Autorole.py is online.")
-        print('______________________')
+        
 
 
-#auto role, local only
+#auto role, local only/ SET THE ROLE AUTOMATICALLY GIVEN
     @commands.Cog.listener()
-    async def on_member_join(self, member):
+    async def on_member_join(self, member):             #SET THE ROLE HERE
         join_role = discord.utils.get(member.guild.roles, name='Friend')
         await member.add_roles(join_role)
-
 
 
 

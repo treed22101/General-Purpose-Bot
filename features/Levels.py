@@ -45,7 +45,6 @@ class Levels(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Levels.py is online.")
-        print('______________________')
 
 
 
@@ -93,6 +92,8 @@ class Levels(commands.Cog):
         embed.set_footer(text=f'Requested by {ctx.author.name},', icon_url=ctx.author.avatar)
 
         await ctx.send(embed=embed)
+
+
 
 
 async def setup(client):
