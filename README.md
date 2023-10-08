@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # General_Purpose_Bot
 A general purpose discord bot made with discord.py.
 Moderation, setup, level system, and more.
