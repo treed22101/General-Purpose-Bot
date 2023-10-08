@@ -9,7 +9,6 @@ Moderation, setup, level system, and more.
 
 3. Launch from ```bot.py```
 
-4. All of the commands are listed via !help once you setup the bot
 
 # Setup Note
 1. Some of the commands are not customized, so set them to your liking.
