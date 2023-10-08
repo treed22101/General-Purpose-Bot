@@ -4,9 +4,10 @@ import asyncio
 import json
 import random 
 
+
+
 from discord.ext import commands, tasks
-from discord.ext.commands import has_permissions, MissingPermissions
-from discord.utils import get
+from discord.ext.commands import has_permissions
 from dotenv import load_dotenv
 from itertools import cycle
 
@@ -30,14 +31,15 @@ async def change_status():
 
 
 
-#lets us know if bot was turn on properly
+#lets us know if bot was turn on properly, and starboard functionality
 @client.event
 async def on_ready():
     print(f"You have successfully logged into {client.user.name}")
     print('----------------------')
     change_status.start()
+   
 
-
+    
 async def load():
     for filename in os.listdir('./features'):
         if filename.endswith('.py'):
