@@ -5,11 +5,13 @@ A general purpose discord bot made with discord.py.
 Moderation, setup, level system, and more.
 
 ## How To Use
-1. Set your token in the ```.env``` and install anything needed in ```requirements.txt```
+1. Clone the repository
 
-2. If the token for any reason is not being imported properly, move the .env file to your DESKTOP and not your IDE dir.
+2. Set your token in the ```.env``` and install anything needed in ```requirements.txt```
 
-3. Launch from ```bot.py```
+3. If the token for any reason is not being imported properly, move the .env file to your DESKTOP and not your IDE dir.
+
+4. Launch from ```bot.py```
 
 
 # Setup Note
