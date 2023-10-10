@@ -171,7 +171,7 @@ page1.add_field(name='ban', value='Bans a specified user', inline=False)
 page1.add_field(name='unban', value='Unbans a specified user', inline=False)
 page1.add_field(name='mute', value='Adds a mute role to a speicifed user', inline=False)
 page1.add_field(name='unmute', value='Takes away the mute role from a specified user', inline=False)
-page1.add_field(name='setup', value='Automatically sets up very basic discord channels and vcs', inline=False)
+page1.add_field(name='create', value='Automatically sets up very basic discord channels and vcs', inline=False)
 
 
 
