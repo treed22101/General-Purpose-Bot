@@ -11,6 +11,9 @@ from itertools import cycle
 
 
 load_dotenv()
+
+
+
 TOKEN=os.getenv('DISCORD_TOKEN') #pulls token from the .env file
 client=commands.Bot(command_prefix='!', intents=discord.Intents.all())
 client.remove_command('help')
@@ -29,7 +32,7 @@ async def change_status():
 
 
 
-#lets us know if bot was turn on properly, and starboard functionality
+#lets us know if bot was turn on properly
 @client.event
 async def on_ready():
     print(f"You have successfully logged into {client.user.name}")
@@ -94,7 +97,7 @@ async def on_guild_remove(guild):
 
 
 
-
+#russian roulette command, bans the user if they guess the random number.
 response = ['You got lucky this time!', 'Luck was on your side today!', 'You live, try your luck again?', 'Try again, if you dare.']
 
 def check(message):
@@ -104,7 +107,7 @@ def check(message):
     except ValueError:
         return False
 
-#russian roulette command, bans the user if they guess the random number, check above and random responses.
+
 @client.command()
 async def roulette(ctx, member:discord.Member=None):
 
@@ -157,98 +160,6 @@ async def create(ctx):
 
 
 
-#multipage help command
-
-#page1
-page1 = discord.Embed(
-    title='Admin Commands', 
-    description='Commands only mods can use!',
-      color=discord.Color.dark_gold()
-)
-page1.add_field(name='clear', value='Deletes a specified amount of messages', inline=False)
-page1.add_field(name='kick', value='Kicks a specified user', inline=False)
-page1.add_field(name='ban', value='Bans a specified user', inline=False)
-page1.add_field(name='unban', value='Unbans a specified user', inline=False)
-page1.add_field(name='mute', value='Adds a mute role to a speicifed user', inline=False)
-page1.add_field(name='unmute', value='Takes away the mute role from a specified user', inline=False)
-page1.add_field(name='create', value='Automatically sets up very basic discord channels and vcs', inline=False)
-
-
-
-#page 2
-page2 = discord.Embed(
-    title='Info Commands', 
-    description='Commands for info!', 
-    color=discord.Color.dark_red()
-)
-page2.add_field(name='stats', value='Deletes a specified amount of messages', inline=False)
-page2.add_field(name='level', value='Deletes a specified amount of messages', inline=False)
-page2.add_field(name='help', value='Sends what you are looking at right now!', inline=False)
-
-
-
-#page 3
-page3 = discord.Embed(
-    title='Fun Commands',
-    description='Commands for fun!', 
-    color=discord.Color.dark_green()
-)
-page3.add_field(name='roulette', value='Deletes a specified amount of messages', inline=False)
-page3.add_field(name='ping', value='Lets you know the latency of the bot', inline=False)
-page3.add_field(name='punch', value='Punches a specified user', inline=False)
-
-client.help_pages = [page1, page2, page3]
-
-
-
-
-#(the actual help command)
-@client.command()
-async def help(ctx):
-    buttons = {u'\u23EA', u'\u25C0', u'\u25B6', u'\u23E9'}
-    current = 0
-    msg = await ctx.send(embed=client.help_pages[current])
-
-    for button in buttons:
-        await msg.add_reaction(button)
-    
-    while True:
-        try:
-            reaction, user = await client.wait_for('reaction_add', check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons, timeout=60)
-
-        except asyncio.TimeoutError:
-            embed = client.help_pages[current]
-            embed.set_footer(text='Timed Out.')
-            await msg.clear_reactions()
-
-        else:
-            previous_page = current
-
-            if reaction.emoji == u'\u23EA':
-                current = 0
-
-            elif reaction.emoji == u'\u25C0':
-                if current > 0:
-                    current -= 1
-
-
-            elif reaction.emoji == u'\u25B6':
-                if current < len(client.help_pages)-1:
-                    current +=1
-            
-            elif reaction.emoji == u'\u23E9':
-                current = len(client.help_pages)-1
-
-            for button in buttons:
-                await msg.remove_reaction(button, ctx.author)
-
-            if current != previous_page:
-                await msg.edit(embed=client.help_pages[current])
-
-
-
-
-
 #dumb punch command
 @client.command()
 async def punch(ctx, member:discord.Member):
@@ -261,13 +172,29 @@ async def punch(ctx, member:discord.Member):
             f'{ctx.author.mention} just punched {member.mention} into a volcano!',
             f'{ctx.author.mention} just punched {member.mention} into a wall?'
             f"{ctx.author.mention} just punched {member.mention}'s head into the ground!"
-            f'{ctx.author.mention} just punched {member.mention} to death!'
-               ]
+            f'{ctx.author.mention} just punched {member.mention} to death!']
     await ctx.send(random.choice(punches))
 
 
 
 
+
+
+#server info command
+@client.command()
+async def server(ctx):
+
+
+    server_embed = discord.Embed(title=f"Info about {ctx.guild.name}", description=f'All public info about {ctx.guild.name}', color=discord.Color.blue())
+    server_embed.set_thumbnail(url=ctx.guild.icon)
+    server_embed.add_field(name="Server Name:", value=ctx.guild.name, inline=False)
+    server_embed.add_field(name="Owner:", value=ctx.guild.owner, inline=False)
+    server_embed.add_field(name="ID:", value=ctx.guild.id, inline=False)
+    server_embed.add_field(name="Members:", value=ctx.guild.member_count, inline=False)
+    server_embed.add_field(name='Created on:', value=ctx.guild.created_at.__format__('%A, %d %B, %Y. @%H:%M:%S'), inline=False)
+    server_embed.set_footer(text=f'Requested by: {ctx.author.name}', icon_url=ctx.author.avatar)
+
+    await ctx.send(embed=server_embed)
 
 
 
@@ -300,13 +227,39 @@ async def stats(ctx, member:discord.Member=None):
 
 
 
+
+#dm user command
+@client.command()
+@has_permissions(manage_messages=True)
+async def dm(ctx, user: discord.User, *, message):
+    try:
+        if user == client.user:
+            return
+
+        await user.send(message)
+
+        await ctx.send(f"Message sent successfully to {user.name}!")
+
+    except discord.Forbidden:
+        await ctx.send("I can't dm this user, they may have dm perms off for me")
+
+    except Exception as e:
+        await ctx.send(f"There was an error: {e}")
+
+
+
+
+
 #global error handling
 @client.event 
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Missing argument, did you specify who or how many?')
-    if isinstance(error, commands.MissingPermissions):
+    elif isinstance(error, commands.MissingPermissions):
         await ctx.send('You do not have the permissions to use this command.')
+
+
+
 
 
 async def main():
