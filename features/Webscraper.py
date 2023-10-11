@@ -21,7 +21,7 @@ class Webscraper(commands.Cog):
             return await response.text()
 
 
-
+    #this loops through our restock check function every 5 minutes
     @tasks.loop(minutes=5)
     async def check_restock(self):
         async with aiohttp.ClientSession() as session:
@@ -29,6 +29,8 @@ class Webscraper(commands.Cog):
             soup = BeautifulSoup(html, 'html.parser')
             out_of_stock_elements = soup.select('.add-to-cart-button[disabled]')
 
+
+            #set channel you want to provide the 4090 updates to here
             channel = self.client.get_channel(1161629542738305107)
             
             if not out_of_stock_elements:
