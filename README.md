@@ -11,6 +11,8 @@ Moderation, setup, level system, and more.
 
 4. Launch from ```bot.py```
 
+5. !help to see all the commands of the bot so far.
+
 
 # Setup Note
 1. Some of the commands are not customized, so set them to your liking.
