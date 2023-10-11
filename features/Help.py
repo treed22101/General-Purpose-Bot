@@ -43,6 +43,7 @@ class Help(commands.Cog):
             try:
                 reaction, user = await self.client.wait_for('reaction_add', timeout=60.0, check=check)
 
+                
                 if str(reaction.emoji) == '▶️' and current_page != len(embed_pages) - 1:
                     current_page += 1
                     await message.edit(embed=embed_pages[current_page])

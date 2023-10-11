@@ -15,7 +15,7 @@ class AutoRole(commands.Cog):
 #auto role, local only/ SET THE ROLE AUTOMATICALLY GIVEN
     @commands.Cog.listener()
     async def on_member_join(self, member):             #SET THE ROLE HERE
-        join_role = discord.utils.get(member.guild.roles, name='')
+        join_role = discord.utils.get(member.guild.roles, name='Actual Degenerate')
         await member.add_roles(join_role)
 
 

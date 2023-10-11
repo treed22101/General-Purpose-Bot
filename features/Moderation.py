@@ -44,6 +44,8 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed=embed)
 
+        
+
 
 
 
