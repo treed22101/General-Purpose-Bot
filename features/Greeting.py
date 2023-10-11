@@ -17,7 +17,7 @@ class Greeting(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         guild = member.guild
-        channel_id = 
+        channel_id =    #make sure to set the channel you want members being welcomed HERE
         channel = guild.get_channel(channel_id)
 
         if channel:
@@ -51,7 +51,7 @@ class Greeting(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         guild = member.guild
-        channel_id = 
+        channel_id =     #make sure to set the channel you want the goodbye message being sent in HERE
         channel = guild.get_channel(channel_id)
 
         if channel:
