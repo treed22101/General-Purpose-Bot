@@ -2,6 +2,7 @@
 A general purpose discord bot made with discord.py.
 Moderation, setup, level system, and more.
 
+
 ## How To Use
 1. Clone the repository
 
@@ -14,9 +15,21 @@ Moderation, setup, level system, and more.
 5. !help to see all the commands of the bot so far.
 
 
-# Setup Note
+## Setup Note
 1. Some of the commands are not customized, so set them to your liking.
 
-2. The role in ```Autorole.py```, banned words in ```main.py```, the logging channel name in ```Logging.py```, and the welcome channel id in ```Greeting.py``` all need to be set with roles and channels YOU create in your server, as well as words you don't want being said.
+2. Certain cogs need channel ids and roles set. (```Autorole.py```, ```Greeting.py```, ```Logging.py```, ```Webscraper```)
 
 3. Use !setmute {the name of the role} to set the mute role (create one).
+
+4. I have a chatGPT feature set up so if you would like you can get a key and set it in the .env file. I have gpt-3.5-turbo set as the default model. You can change that as well.
+
+
+
+## TODO
+1. Fix the 4090 ti webscraper
+
+2. Set up a starboard and music features
+
+
+
