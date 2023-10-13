@@ -38,7 +38,7 @@ class Webscraper(commands.Cog):
 
 
             #set channel you want to provide the 4090 updates to here
-                channel_id = 1162376636675666023
+                channel_id = 
                 channel = guild.get_channel(channel_id)
             
                 if not out_of_stock_elements:
