@@ -17,7 +17,7 @@ class Greeting(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         guild = member.guild
-        channel_id = 1068521369941323798
+        channel_id =
         channel = guild.get_channel(channel_id)
 
         if channel:
@@ -51,7 +51,7 @@ class Greeting(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         guild = member.guild
-        channel_id = 1068521369941323798
+        channel_id =
         channel = guild.get_channel(channel_id)
 
         if channel:
