@@ -16,7 +16,7 @@ class ServerWipe(commands.Cog):
 
 
 
-
+    #here I define the confirm function for the server wipe
     async def confirm(self, ctx, content):
         await ctx.send(content)
 
@@ -43,11 +43,11 @@ class ServerWipe(commands.Cog):
 
 
 
-    #wipes all messages from all servers (gets buggy and starts becoming slower the more it goes on, kinda just discord there)
+    #wipes all messages from all server channels, owner only (discord does rate limit though so you would be better off just mass deleting with !clear, up to you.)
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    @commands.is_owner()
     async def serverwipe(self, ctx):
-        if await self.confirm(ctx, "Confirm that you want to D-E-L-E-T-E, \n\nALL messages from ALL channels. This is permanent, be careful with your answer!! \n\n Yes or No?"):
+        if await self.confirm(ctx, "Confirm that you want to DELETE ALL messages from ALL channels.\n\nThis is permanent, be careful with your answer!!\n\n Yes or No?"):
             for channel in ctx.guild.text_channels:
                 try:
                     await channel.purge(limit=None)

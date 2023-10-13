@@ -4,14 +4,20 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 
+
+
+
+#NEED TO FIX THIS, WILL SPEND SOME TIME ON IT
 PRODUCT_URL = 'https://www.bestbuy.com/site/searchpage.jsp?st=rtx+4090+ti'
-
-
 
 class Webscraper(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.check_restock.start()
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print('Webscraper.py is online')
 
     def cog_unload(self):
         self.check_restock.cancel()
@@ -20,30 +26,28 @@ class Webscraper(commands.Cog):
         async with session.get(url) as response:
             return await response.text()
 
-
-
     @tasks.loop(minutes=5)
-    async def check_restock(self):
-        async with aiohttp.ClientSession() as session:
-            html = await self.fetch_page(session, PRODUCT_URL)
-            soup = BeautifulSoup(html, 'html.parser')
-            out_of_stock_elements = soup.select('.add-to-cart-button[disabled]')
+    async def check_restock(self, guild):
+        try:
+            async with aiohttp.ClientSession() as session:
+                html = await self.fetch_page(session, PRODUCT_URL)
+                soup = BeautifulSoup(html, 'html.parser')
+                out_of_stock_elements = soup.select('.add-to-cart-button[disabled]')
 
-            channel = self.client.get_channel(1161629542738305107)
+                channel_id = 1162376636675666023
+                channel = guild.get_channel(channel_id)
             
-            if not out_of_stock_elements:
-                await channel.send('New update on the RTX 4090 TI! Go check: {}'.format(PRODUCT_URL))
-            else:
-                await channel.send('No updates. Still out of stock.')
-
-
+                if not out_of_stock_elements:
+                    await channel.send(f'Might be back in stock now! Go ahead and check: {PRODUCT_URL}')
+                else:
+                    await channel.send('Still out of stock.')
+        except Exception as e:
+            print(f"Error: {e}")
 
 
     @check_restock.before_loop
     async def before_check_restock(self):
         await self.client.wait_until_ready()
-
-
 
 
 async def setup(client):

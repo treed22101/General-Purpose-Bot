@@ -9,23 +9,25 @@ import random
 
 
 class Levels(commands.Cog):
-    def __init__(self,client):
+    def __init__(self, client):
         self.client = client
-
         self.client.loop.create_task(self.save())
 
         with open('features/jsonfiles/users.json', 'r') as f:
             self.users = json.load(f)
+            
+        with open('features/jsonfiles/leaderboard.json', 'r') as f:
+            self.leaderboard = json.load(f)
+
+
+
 
     @commands.Cog.listener()
     async def on_ready(self):
-            print("Levels.py is online.")
+        print("Levels.py is online.")
 
 
 
-
-
-#we set the level cap and the level up fuction here
     def level_up(self, author_id):
         current_exp = self.users[author_id]['Exp']
         current_level = self.users[author_id]['Level']
@@ -36,35 +38,28 @@ class Levels(commands.Cog):
         else:
             return False
 
-
-
-
-
-#this saves our exp and level to the json file, you can do a database instead if you would like, this was for simplicity
     async def save(self):
         await self.client.wait_until_ready()
         while not self.client.is_closed():
             with open('features/jsonfiles/users.json', 'w') as f:
                 json.dump(self.users, f, indent=4)
 
+            with open('features/jsonfiles/leaderboard.json', 'w') as f:
+                json.dump(self.leaderboard, f, indent=4)
+
             await asyncio.sleep(5)
 
 
 
 
-
-
-#setting our levels and exp
     @commands.Cog.listener()
     async def on_message(self, message):
-        
         if message.author.id == self.client.user.id:
             return
         
         author_id = str(message.author.id)
 
         if not author_id in self.users:
-
             self.users[author_id] = {}
             self.users[author_id]['Level'] = 1
             self.users[author_id]['Exp'] = 0
@@ -72,13 +67,15 @@ class Levels(commands.Cog):
         random_exp = random.randint(5, 15)
         self.users[author_id]['Exp'] += random_exp 
 
+        self.leaderboard[author_id] = self.users[author_id]['Exp']
+
         if self.level_up(author_id):
             await message.channel.send(f'{message.author.mention} has leveled up to level {self.users[author_id]["Level"]}!')
 
 
 
 
-#level command (lets us know our level and exp)
+    #level command (lets us know our level and exp)
     @commands.command(aliases=['rank', 'lvl', 'r'])
     async def level(self, ctx, user:discord.User=None):
         if user is None:
@@ -93,6 +90,19 @@ class Levels(commands.Cog):
 
         await ctx.send(embed=level_card)
 
+
+
+    #leaderboard command, stores in a json file
+    @commands.command(aliases=['lb', 'top'])
+    async def leaderboard(self, ctx):
+        sorted_leaderboard = sorted(self.leaderboard.items(), key=lambda x: x[1], reverse=True)[:10]
+        embed = discord.Embed(title="Leaderboard", color=discord.Color.dark_red())
+        rank = 1
+        for user_id, exp in sorted_leaderboard:
+            user = self.client.get_user(int(user_id))
+            embed.add_field(name=f"{rank}. {user.name}", value=f"Exp: {exp}", inline=False)
+            rank += 1
+        await ctx.send(embed=embed)
 
 
 

@@ -1,3 +1,7 @@
 discord.py
 python-dotenv
 asyncio
+aiohttp
+bs4
+requests
+openai

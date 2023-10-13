@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands
 import traceback
 import os
@@ -84,6 +83,7 @@ class Module(commands.Cog):
             await ctx.send(f'Failed to reload these:\n{"".join(errors)}\n')
         else:
             await ctx.send('Reloaded all cogs.')
+
 
 
 async def setup(client):
