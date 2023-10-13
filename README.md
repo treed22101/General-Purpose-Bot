@@ -2,7 +2,6 @@
 A general purpose discord bot made with discord.py.
 Moderation, setup, level system, and more.
 
-
 ## How To Use
 1. Clone the repository
 
@@ -25,11 +24,7 @@ Moderation, setup, level system, and more.
 4. I have a chatGPT feature set up so if you would like you can get a key and set it in the .env file. I have gpt-3.5-turbo set as the default model. You can change that as well.
 
 
-
 ## TODO
 1. Fix the 4090 ti webscraper
 
 2. Set up a starboard and music features
-
-
-
