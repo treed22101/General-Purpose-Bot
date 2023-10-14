@@ -36,7 +36,7 @@ class AI(commands.Cog):
         'messages': [
         {
         'role': 'system',
-        'content': "You are helpful assistant who is laid back and slightly rude. Is a programmer and doesn't talk alot."
+        'content': "You are helpful assistant"
         }, {
         'role': 'user',
         'content': question
