@@ -36,7 +36,7 @@ class Chatbot(commands.Cog):
         'messages': [
         {
         'role': 'system',
-        'content': "You are helpful assistant who is laid back and slightly rude. Is a programmer and doesn't talk alot."
+        'content': "You are helpful assistant"
         }, {
         'role': 'user',
         'content': question
@@ -55,4 +55,4 @@ class Chatbot(commands.Cog):
    
 
 async def setup(client):
-    await client.add_cog(Chatbot(client))
+    await client.add_cog(AI(client))

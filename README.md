@@ -1,4 +1,4 @@
-# General_Purpose_Bot
+# General-Purpose-bot
 A general purpose discord bot made with discord.py.
 Moderation, setup, level system, and more.
 
