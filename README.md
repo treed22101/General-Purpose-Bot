@@ -17,7 +17,7 @@ Moderation, setup, level system, and more.
 ## Setup Note
 1. Some of the commands are not customized, so set them to your liking.
 
-2. Certain cogs need channel ids and roles set. (```Autorole.py```, ```Greeting.py```, ```Logging.py```, ```Webscraper```)
+2. Certain cogs need channel ids and roles set. (```Autorole.py```, ```Greeting.py```, ```Logging.py```, ```Webscraper.py```)
 
 3. Use !setmute {the name of the role} to set the mute role (create one).
 
