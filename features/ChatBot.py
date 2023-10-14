@@ -11,17 +11,17 @@ AI_KEY = os.getenv('GPT_KEY')
 openai.api_key = AI_KEY
 
 
-class AI(commands.Cog):
+class Chatbot(commands.Cog):
     def __init__(self, client):
         self.client = client
         
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('AI.py is online.')
+        print('ChatBot.py is online.')
 
 
-    #this command integrates gpt-4, (you have to pay for that, use 3.5 turbo in the 'model' key if you don't want to)
+    #gpt model and how it behaves
     @commands.command()
     async def gpt(self, ctx, message, *, question):
         GPT_API_URL = 'https://api.openai.com/v1/chat/completions'  
@@ -55,4 +55,4 @@ class AI(commands.Cog):
    
 
 async def setup(client):
-    await client.add_cog(AI(client))
+    await client.add_cog(Chatbot(client))

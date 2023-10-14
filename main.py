@@ -230,7 +230,7 @@ async def stats(ctx, member:discord.Member=None):
 
 #dm user command
 @client.command()
-@has_permissions(manage_messages=True)
+@commands.is_owner()
 async def dm(ctx, user: discord.User, *, message):
     try:
         if user == client.user:

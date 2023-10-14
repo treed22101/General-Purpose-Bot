@@ -1,6 +1,7 @@
-from discord.ext import commands
 import traceback
 import os
+
+from discord.ext import commands
 
 class Module(commands.Cog):
     def __init__(self, client):
@@ -15,7 +16,7 @@ class Module(commands.Cog):
 
 
 
-
+    #lists all of the functioning cogs of the bot, use this after reloading cogs (owner only)
     @commands.command()
     @commands.is_owner()
     async def allcogs(self, ctx):
@@ -27,12 +28,12 @@ class Module(commands.Cog):
 
 
 
-
+    #unloads a cog (if the cog isn't functioning properly) without stopping the bot (owner only)
     @commands.command()
     @commands.is_owner() 
     async def unload(self, ctx, *, cog: str):
         try:
-            self.client.unload_extension(f'features.{cog}') 
+            await self.client.unload_extension(f'features.{cog}') 
             await ctx.send(f'Unloaded cog: {cog}')
         except commands.ExtensionNotFound:
             await ctx.send(f'There was no {cog} in the directory')
@@ -43,7 +44,7 @@ class Module(commands.Cog):
 
 
 
-
+    #loads a new cog so you can keep the bot functional while you add something new instead of stopping the code (owner only)
     @commands.command()
     @commands.is_owner()
     async def load(self, ctx, cog: str):
@@ -63,7 +64,7 @@ class Module(commands.Cog):
 
 
 
-
+    #reloads all the cogs after you load or unload one to ensure they function properly (owner only)
     @commands.command()
     @commands.is_owner()
     async def reload(self, ctx):
@@ -83,7 +84,6 @@ class Module(commands.Cog):
             await ctx.send(f'Failed to reload these:\n{"".join(errors)}\n')
         else:
             await ctx.send('Reloaded all cogs.')
-
 
 
 async def setup(client):

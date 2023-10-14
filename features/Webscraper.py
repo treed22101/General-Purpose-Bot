@@ -1,57 +1,49 @@
 import discord
-from discord.ext import commands, tasks
-import aiohttp
+import requests
+
 from bs4 import BeautifulSoup
+from discord.ext import commands, tasks
 
-
-
-
-
-#NEED TO FIX THIS, WILL SPEND SOME TIME ON IT
-PRODUCT_URL = 'https://www.bestbuy.com/site/searchpage.jsp?st=rtx+4090+ti'
 
 class Webscraper(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.check_restock.start()
+        self.channel_id = 
+        self.stock_check.start()
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print('Webscraper.py is online')
 
     def cog_unload(self):
-        self.check_restock.cancel()
-
-    async def fetch_page(self, session, url):
-        async with session.get(url) as response:
-            return await response.text()
+        self.stock_check.cancel()
 
 
-    #this loops through our restock check function every 5 minutes
-    @tasks.loop(minutes=5)
-    async def check_restock(self, guild):
-        try:
-            async with aiohttp.ClientSession() as session:
-                html = await self.fetch_page(session, PRODUCT_URL)
-                soup = BeautifulSoup(html, 'html.parser')
-                out_of_stock_elements = soup.select('.add-to-cart-button[disabled]')
+    def check_stock(self):
+        url = 'https://www.bestbuy.com/site/nvidia-geforce-rtx-4090-24gb-gddr6x-graphics-card-titanium-black/6521430.p?skuId=6521430'
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        out_of_stock_elements = soup.select('button:-soup-contains("Sold Out")')  
+
+        return len(out_of_stock_elements) == 0
 
 
-            #set channel you want to provide the 4090 updates to here
-                channel_id = 
-                channel = guild.get_channel(channel_id)
-            
-                if not out_of_stock_elements:
-                    await channel.send(f'Might be back in stock now! Go ahead and check: {PRODUCT_URL}')
-                else:
-                    await channel.send('Still out of stock.')
-        except Exception as e:
-            print(f"Error: {e}")
+
+    @tasks.loop(hours=24)
+    async def stock_check(self):
+        channel = self.client.get_channel(self.channel_id)
+        if self.check_stock():
+            await channel.send('4090 ti back in stock at Best Buy!')
+        else:
+            await channel.send('No 4090 ti in stock at Best Buy.')
 
 
-    @check_restock.before_loop
-    async def before_check_restock(self):
-        await self.client.wait_until_ready()
+
+    @stock_check.before_loop
+    async def before_stock_check(self):
+        await self.client.wait_until_ready() 
+
 
 
 async def setup(client):

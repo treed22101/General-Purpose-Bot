@@ -1,7 +1,7 @@
 import discord
-from discord.ext import commands
 import asyncio
 
+from discord.ext import commands
 
 
 class ServerWipe(commands.Cog):
