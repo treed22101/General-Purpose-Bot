@@ -21,4 +21,4 @@ Moderation, setup, level system, and more.
 
 3. Use !setmute {the name of the role} to set the mute role (create one).
 
-4. I have a chatGPT feature set up so if you would like you can get a key and set it in the .env file. I have gpt-3.5-turbo set as the default model. You can change that as well.
+4. I have a chatGPT feature set up so if you would like you can get a key and set it in the .env file. I have gpt-4 set as the default model. You can change that as well.
