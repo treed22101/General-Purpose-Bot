@@ -9,9 +9,9 @@ Moderation, setup, level system, and more.
 
 3. If the token for any reason is not being imported properly, move the .env file to your DESKTOP and not your IDE dir.
 
-4. Launch from ```bot.py```
+4. Launch from ```main.py```
 
-5. !help to see all the commands of the bot so far.
+5. !help to see all the commands of the bot.
 
 
 ## Setup Note
