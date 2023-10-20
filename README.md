@@ -5,7 +5,7 @@ Moderation, setup, level system, and more.
 ## How To Use
 1. Clone the repository
 
-2. Set your token in the ```.env``` and install anything needed in ```requirements.txt```
+2. Set your token(s) in the ```.env``` and install anything needed in ```requirements.txt```
 
 3. If the token for any reason is not being imported properly, move the .env file to your DESKTOP and not your IDE dir.
 
