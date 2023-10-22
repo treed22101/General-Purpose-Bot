@@ -34,14 +34,14 @@ class Module(commands.Cog):
     async def unload(self, ctx, *, cog: str):
         try:
             await self.client.unload_extension(f'features.{cog}') 
-            await ctx.send(f'Unloaded cog: {cog}')
         except commands.ExtensionNotFound:
-            await ctx.send(f'There was no {cog} in the directory')
+            await ctx.send(f'There was no {cog} found in the directory')
         except commands.ExtensionNotLoaded:
-            await ctx.send(f'{cog} was loaded')
+            await ctx.send(f'{cog} cannot not be unloaded as it is not loaded in the first place.')
         except Exception as e:
             await ctx.send(f'Error: {cog}: {e}')
-
+        else:
+            await ctx.send(f'Unloaded cog: {cog}')
 
 
     #loads a new cog so you can keep the bot functional while you add something new instead of stopping the code (owner only)
@@ -54,7 +54,7 @@ class Module(commands.Cog):
         except commands.ExtensionNotFound:
             await ctx.send(f'There was no {cog} found')
         except commands.ExtensionAlreadyLoaded:
-            await ctx.send(f'{cog} has been already loaded')
+            await ctx.send(f'{cog} is already currently loaded')
         except Exception as e:
             error_content = traceback.format_exception(type(e), e, e.__traceback__)
             error_content = ''.join(error_content)
@@ -83,7 +83,7 @@ class Module(commands.Cog):
         if errors:
             await ctx.send(f'Failed to reload these:\n{"".join(errors)}\n')
         else:
-            await ctx.send('Reloaded all cogs.')
+            await ctx.send(f'Reloaded {cog}.')
 
 
 async def setup(client):
