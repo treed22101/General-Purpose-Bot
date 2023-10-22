@@ -15,11 +15,11 @@ class Music(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Music.py is online.')
+        print('Music.py is online.')                                                                            
 
+        
 
-
-    #joins the vc you are in IF you are in a channel.
+    #joins the vc you are in, only IF you are in a channel.
     @commands.command()
     async def join(self, ctx):
         if ctx.author.voice:
@@ -32,7 +32,7 @@ class Music(commands.Cog):
             await ctx.send("You need to be in a vc for me to join, silly!")
 
 
-    #leaves a vc
+    #leaves the vc
     @commands.command()
     async def leave(self, ctx):
         if ctx.voice_client:

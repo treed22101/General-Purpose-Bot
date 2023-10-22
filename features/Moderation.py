@@ -16,14 +16,19 @@ class Moderation(commands.Cog):
 
 
 
-
-
 #clear messages command
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self,ctx,count: int):
         await ctx.channel.purge(limit=count)
         await ctx.send(f'{count} message(s) have been deleted.')
+
+    @clear.error
+    async def clear_error(self,ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('How many messages do you want me to clear? Please specify.')
 
 
 
@@ -36,7 +41,7 @@ class Moderation(commands.Cog):
         await ctx.guild.kick(member)
 
         embed=discord.Embed(
-            title=f'Confirmed.',
+            title='Confirmed.',
             color=discord.Color.green()
         )
         
@@ -45,8 +50,13 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed=embed)
 
-        
-
+      
+    @kick.error
+    async def kick_error(self, ctx,error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Who do you want me to kick? Please specify.')
 
 
 
@@ -59,7 +69,7 @@ class Moderation(commands.Cog):
         await ctx.guild.ban(member)
 
         embed=discord.Embed(
-            title=f'Confirmed.', 
+            title='Confirmed.', 
             color=discord.Color.dark_gold()
         )
 
@@ -69,6 +79,14 @@ class Moderation(commands.Cog):
         await ctx.send(embed=embed)
 
   
+    @ban.error
+    async def ban_error(self, ctx,error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Who do you want me to ban? Please specify.')
+
+
 
 
 
@@ -90,6 +108,13 @@ class Moderation(commands.Cog):
         await ctx.send(embed=embed)
 
     
+    @unban.error
+    async def unban_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Who do you want me to unban? Please specify.')
+
 
 
 
@@ -115,8 +140,14 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed=embed)
 
-
+    @setmute.error
+    async def setmute_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('What do you want to be the mute role? Please specify.')
  
+
 
 
 
@@ -130,7 +161,15 @@ class Moderation(commands.Cog):
         mute_role = discord.utils.get(ctx.guild.roles, name=role[str(ctx.guild.id)])
 
         await member.add_roles(mute_role)
-        await ctx.send(f'{member.mention} has been muted.')
+        await ctx.send(f'{member.mention} has been muted for {reason}.')
+
+
+    @mute.error
+    async def mute_error(self, ctx,error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Who do you want me to mute? Please specify.')
 
 
 
@@ -149,6 +188,14 @@ class Moderation(commands.Cog):
         await ctx.send(f'{member.mention} has been unmuted.')
 
 
+    @unmute.error
+    async def unmute_error(self, ctx,error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command.')
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Who do you want me to unmute? Please specify.')
+
+
 
 
 
@@ -165,6 +212,11 @@ class Moderation(commands.Cog):
 
         embed.set_thumbnail(url=ctx.author.avatar.url)
         await ctx.reply(embed=embed)
+
+    @ping.error
+    async def ping_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('You do not have the permissions to use this command')
 
 
 

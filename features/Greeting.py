@@ -14,7 +14,6 @@ class Greeting(commands.Cog):
 
 
 
-
 #when a user joins the server it will send a greeting and dm them info about the server/ SET THE WELCOME CHANNEL ID
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -48,7 +47,6 @@ class Greeting(commands.Cog):
             
 
         
-
 #when a user leaves the server/ SET THE WELCOME CHANNEL ID
     @commands.Cog.listener()
     async def on_member_remove(self, member):

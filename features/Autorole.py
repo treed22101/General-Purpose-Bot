@@ -21,6 +21,5 @@ class AutoRole(commands.Cog):
 
 
 
-
 async def setup(client):
     await client.add_cog(AutoRole(client))

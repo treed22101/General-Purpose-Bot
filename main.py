@@ -124,7 +124,7 @@ async def roulette(ctx, member:discord.Member=None):
 
     if choice == chamber:
         await asyncio.sleep(1)
-        await ctx.send(f"Guess you can't be so lucky always!")
+        await ctx.send("Guess you can't be so lucky always!")
         await asyncio.sleep(1)
         for number in range(5,0,-1):
             await asyncio.sleep(1)

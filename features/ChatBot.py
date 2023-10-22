@@ -54,5 +54,7 @@ class Chatbot(commands.Cog):
 
    
 
+
+
 async def setup(client):
-    await client.add_cog(AI(client))
+    await client.add_cog(Chatbot(client))

@@ -64,7 +64,7 @@ class Help(commands.Cog):
 
 
 
-    #define the embed creation here
+
     def create_embed(self, title, description, color):
         embed = discord.Embed(
             title=title,

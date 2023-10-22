@@ -3,10 +3,10 @@ import discord
 from discord.ext import commands
 
 
+
 class Logging(commands.Cog):
     def __init__(self,client):
         self.client = client
-
 
 
 
@@ -14,8 +14,6 @@ class Logging(commands.Cog):
     async def on_ready(self):
         print("Logging.py is online.")
         
-
-
 
 
 #logging feature/ SET THE NAME OF THE LOGGING CHANNEL 
@@ -40,10 +38,6 @@ class Logging(commands.Cog):
         
 
         await log_channel.send(embed=log_embed)
-
-
-
-
 
 
 

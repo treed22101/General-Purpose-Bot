@@ -30,13 +30,13 @@ class Random(commands.Cog):
             data = response.json()
             return data['text']
         except requests.RequestException:
-            return "Can't get a fact for you. Check the code for bugs"
+            return "Error, can't get a fact for you."
 
 
-    #gets a random fact for us from the API URL every 12 hours and sends in a specified channel
+    #gets a random fact for us from the url every 12 hours and sends in a specified channel
     @tasks.loop(hours=12)
     async def send_fact(self):
-        channel_id = 
+        channel_id = 1162698559502688326
         channel = self.bot.get_channel(channel_id)
         fact = self.fetch_random_fact()
         await channel.send(fact)
@@ -45,7 +45,6 @@ class Random(commands.Cog):
     @send_fact.before_loop
     async def before_send_fact(self):
         await self.bot.wait_until_ready()  
-
 
 async def setup(client):
     await client.add_cog(Random(client))
