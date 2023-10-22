@@ -143,7 +143,7 @@ async def roulette(ctx, member:discord.Member=None):
 
 #server setup command, you can change this to how you like, with the same format!
 @client.command()
-@has_permissions(manage_messages=True)
+@commands.is_owner()
 async def create(ctx):
     guild = ctx.guild
     await ctx.send('Setup in progress!')
